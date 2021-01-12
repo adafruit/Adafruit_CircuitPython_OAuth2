@@ -79,13 +79,12 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
         # The scopes of access granted by the access_token as a list
         self.access_token_scope = None
 
-        if access_token:
-            # The token that your application sends to authorize a Google API request
-            self.access_token = access_token
-        if refresh_token:
-            # A token that you can use to obtain a new access token
-            # Refresh tokens are valid until the user revokes access
-            self.refresh_token = None
+        # The token that your application sends to authorize a Google API request
+        self.access_token = access_token
+
+        # A token that you can use to obtain a new access token
+        # Refresh tokens are valid until the user revokes access
+        self.refresh_token = refresh_token
 
     def request_codes(self):
         """Identifies your application and access scopes with Google's
