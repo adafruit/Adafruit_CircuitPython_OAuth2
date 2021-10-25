@@ -60,6 +60,11 @@ Usage Example
 
 Usage example for different network interfaces are avaliable within the examples folder.
 
+Documentation
+=============
+
+API documentation for this library can be found on `Read the Docs <https://circuitpython.readthedocs.io/projects/oauth2/en/latest/>`_.
+
 Contributing
 ============
 
