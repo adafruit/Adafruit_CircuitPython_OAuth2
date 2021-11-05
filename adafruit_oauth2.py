@@ -177,7 +177,7 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
             )
         )
         resp = self._requests.post(url, headers=headers)
-        if resp.status_code == 400 or resp.status_code == 404:
+        if resp.status_code in (400, 404):
             return False
         json_resp = resp.json()
         resp.close()
