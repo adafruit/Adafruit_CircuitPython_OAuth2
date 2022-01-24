@@ -2,7 +2,7 @@ Introduction
 ============
 
 .. image:: https://readthedocs.org/projects/adafruit-circuitpython-oauth2/badge/?version=latest
-    :target: https://circuitpython.readthedocs.io/projects/oauth2/en/latest/
+    :target: https://docs.circuitpython.org/projects/oauth2/en/latest/
     :alt: Documentation Status
 
 .. image:: https://img.shields.io/discord/327254708534116352.svg
@@ -63,7 +63,7 @@ Usage example for different network interfaces are avaliable within the examples
 Documentation
 =============
 
-API documentation for this library can be found on `Read the Docs <https://circuitpython.readthedocs.io/projects/oauth2/en/latest/>`_.
+API documentation for this library can be found on `Read the Docs <https://docs.circuitpython.org/projects/oauth2/en/latest/>`_.
 
 Contributing
 ============
