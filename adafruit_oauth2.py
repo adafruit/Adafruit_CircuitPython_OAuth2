@@ -22,6 +22,11 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
+try:
+    from typing import Optional
+    import adafruit_requests
+except ImportError:
+    pass
 
 # imports
 import time
@@ -52,13 +57,13 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
 
     def __init__(
         self,
-        requests,
-        client_id,
-        client_secret,
-        scopes,
-        access_token=None,
-        refresh_token=None,
-    ):
+        requests: adafruit_requests.Session,
+        client_id: str,
+        client_secret: str,
+        scopes: list,
+        access_token: Optional[str] = None,
+        refresh_token: Optional[str] = None,
+    ) -> None:
         self._requests = requests
         self._client_id = client_id
         self._client_secret = client_secret
