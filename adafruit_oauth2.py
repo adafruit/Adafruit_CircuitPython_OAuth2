@@ -22,6 +22,11 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
+try:
+    from typing import Optional, List
+    import adafruit_requests
+except ImportError:
+    pass
 
 # imports
 import time
@@ -41,7 +46,7 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
     """Implements OAuth2.0 authorization to access Google APIs via
     the OAuth 2.0 limited-input device application flow.
     https://developers.google.com/identity/protocols/oauth2/limited-input-device
-    :param requests: An adafruit_requests object.
+    :param adafruit_requests.Session requests: An adafruit_requests object.
     :param str client_id: The client ID for your application.
     :param str client_secret: The client secret obtained from the API Console.
     :param list scopes: Scopes that identify the resources used by the application.
@@ -52,13 +57,13 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
 
     def __init__(
         self,
-        requests,
-        client_id,
-        client_secret,
-        scopes,
-        access_token=None,
-        refresh_token=None,
-    ):
+        requests: adafruit_requests.Session,
+        client_id: str,
+        client_secret: str,
+        scopes: List[str],
+        access_token: Optional[str] = None,
+        refresh_token: Optional[str] = None,
+    ) -> None:
         self._requests = requests
         self._client_id = client_id
         self._client_secret = client_secret
