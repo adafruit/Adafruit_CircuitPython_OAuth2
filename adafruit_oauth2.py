@@ -23,7 +23,7 @@ Implementation Notes
 
 """
 try:
-    from typing import Optional
+    from typing import Optional, List
     import adafruit_requests
 except ImportError:
     pass
@@ -46,7 +46,7 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
     """Implements OAuth2.0 authorization to access Google APIs via
     the OAuth 2.0 limited-input device application flow.
     https://developers.google.com/identity/protocols/oauth2/limited-input-device
-    :param requests: An adafruit_requests object.
+    :param adafruit_requests.Session requests: An adafruit_requests object.
     :param str client_id: The client ID for your application.
     :param str client_secret: The client secret obtained from the API Console.
     :param list scopes: Scopes that identify the resources used by the application.
@@ -60,7 +60,7 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
         requests: adafruit_requests.Session,
         client_id: str,
         client_secret: str,
-        scopes: list,
+        scopes: List[str],
         access_token: Optional[str] = None,
         refresh_token: Optional[str] = None,
     ) -> None:

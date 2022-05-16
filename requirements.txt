@@ -4,5 +4,4 @@
 # SPDX-License-Identifier: MIT
 
 Adafruit-Blinka
-adafruit-circuitpython-requests,
-adafruit-requests
+adafruit-circuitpython-requests

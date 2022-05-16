@@ -37,7 +37,6 @@ setup(
     install_requires=[
         "Adafruit-Blinka",
         "adafruit-circuitpython-requests",
-        "adafruit-requests",
     ],
     # Choose your license
     license="MIT",
