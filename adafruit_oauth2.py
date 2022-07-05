@@ -91,7 +91,7 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
         # Refresh tokens are valid until the user revokes access
         self.refresh_token = refresh_token
 
-    def request_codes(self):
+    def request_codes(self) -> None:
         """Identifies your application and access scopes with Google's
         authorization server. Attempts to request device and user codes
         """
@@ -118,7 +118,7 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
         self.verification_url = json_resp["verification_url"]
         self.user_code = json_resp["user_code"]
 
-    def wait_for_authorization(self):
+    def wait_for_authorization(self) -> bool:
         """Blocking method which polls Google's authorization server
         until a response from Google's authorization server indicating
         that the user has responded to the access request, or until the
@@ -164,7 +164,7 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
         self.access_token_scope = json_resp["scope"]
         return True
 
-    def refresh_access_token(self):
+    def refresh_access_token(self) -> bool:
         """Refreshes an expired access token.
         :return: True if able to refresh an access token, False otherwise.
 
