@@ -4,10 +4,11 @@
 import board
 import busio
 from digitalio import DigitalInOut
-import adafruit_esp32spi.adafruit_esp32spi_socket as socket
+import adafruit_connection_manager
+import adafruit_esp32spi.adafruit_esp32spi_socket as pool
 from adafruit_esp32spi import adafruit_esp32spi
 
-import adafruit_requests as requests
+import adafruit_requests
 from adafruit_oauth2 import OAuth2
 
 # Add a secrets.py to your filesystem that has a dictionary called secrets with "ssid" and
@@ -36,9 +37,9 @@ while not esp.is_connected:
         continue
 print("Connected to", str(esp.ssid, "utf-8"), "\tRSSI:", esp.rssi)
 
-# Initialize a requests object
-socket.set_interface(esp)
-requests.set_socket(socket, esp)
+# Initialize a requests session
+ssl_context = adafruit_connection_manager.create_fake_ssl_context(pool, esp)
+requests = adafruit_requests.Session(pool, ssl_context)
 
 # Set scope(s) of access required by the API you're using
 scopes = ["email"]
