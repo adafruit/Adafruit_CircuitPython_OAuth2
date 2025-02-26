@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: 2020 Brent Rubell, written for Adafruit Industries
 #
 # SPDX-License-Identifier: Unlicense
+
+from os import getenv
 import board
 import busio
 from digitalio import DigitalInOut
@@ -10,15 +12,11 @@ from adafruit_esp32spi import adafruit_esp32spi
 import adafruit_requests
 from adafruit_oauth2 import OAuth2
 
-# Add a secrets.py to your filesystem that has a dictionary called secrets with "ssid" and
-# "password" keys with your WiFi credentials. DO NOT share that file or commit it into Git or other
-# source control.
-# pylint: disable=no-name-in-module,wrong-import-order
-try:
-    from secrets import secrets
-except ImportError:
-    print("Credentials and tokens are kept in secrets.py, please add them there!")
-    raise
+# Get WiFi details and Google keys, ensure these are setup in settings.toml
+ssid = getenv("CIRCUITPY_WIFI_SSID")
+password = getenv("CIRCUITPY_WIFI_PASSWORD")
+google_client_id = getenv("google_client_id")
+google_client_secret = getenv("google_client_secret")
 
 esp32_cs = DigitalInOut(board.ESP_CS)
 esp32_ready = DigitalInOut(board.ESP_BUSY)
@@ -30,7 +28,7 @@ esp = adafruit_esp32spi.ESP_SPIcontrol(spi, esp32_cs, esp32_ready, esp32_reset)
 print("Connecting to AP...")
 while not esp.is_connected:
     try:
-        esp.connect_AP(secrets["ssid"], secrets["password"])
+        esp.connect_AP(ssid, password)
     except RuntimeError as e:
         print("could not connect to AP, retrying: ", e)
         continue
@@ -45,9 +43,7 @@ requests = adafruit_requests.Session(pool, ssl_context)
 scopes = ["email"]
 
 # Initialize an OAuth2 object
-google_auth = OAuth2(
-    requests, secrets["google_client_id"], secrets["google_client_secret"], scopes
-)
+google_auth = OAuth2(requests, google_client_id, google_client_secret, scopes)
 
 # Request device and user codes
 # https://developers.google.com/identity/protocols/oauth2/limited-input-device#step-1:-request-device-and-user-codes
