@@ -1,25 +1,23 @@
 # SPDX-FileCopyrightText: 2020 Brent Rubell, written for Adafruit Industries
 #
 # SPDX-License-Identifier: Unlicense
+
+from os import getenv
 import ssl
 import wifi
 import socketpool
 import adafruit_requests
 from adafruit_oauth2 import OAuth2
 
-# Add a secrets.py to your filesystem that has a dictionary called secrets with "ssid" and
-# "password" keys with your WiFi credentials. DO NOT share that file or commit it into Git or other
-# source control.
-# pylint: disable=no-name-in-module,wrong-import-order
-try:
-    from secrets import secrets
-except ImportError:
-    print("Credentials and tokens are kept in secrets.py, please add them there!")
-    raise
+# Get WiFi details and Google keys, ensure these are setup in settings.toml
+ssid = getenv("CIRCUITPY_WIFI_SSID")
+password = getenv("CIRCUITPY_WIFI_PASSWORD")
+google_client_id = getenv("google_client_id")
+google_client_secret = getenv("google_client_secret")
 
-print("Connecting to %s" % secrets["ssid"])
-wifi.radio.connect(secrets["ssid"], secrets["password"])
-print("Connected to %s!" % secrets["ssid"])
+print(f"Connecting to {ssid}")
+wifi.radio.connect(ssid, password)
+print(f"Connected to {ssid}")
 
 pool = socketpool.SocketPool(wifi.radio)
 requests = adafruit_requests.Session(pool, ssl.create_default_context())
@@ -29,9 +27,7 @@ requests = adafruit_requests.Session(pool, ssl.create_default_context())
 scopes = ["email"]
 
 # Initialize an OAuth2 object
-google_auth = OAuth2(
-    requests, secrets["google_client_id"], secrets["google_client_secret"], scopes
-)
+google_auth = OAuth2(requests, google_client_id, google_client_secret, scopes)
 
 # Request device and user codes
 # https://developers.google.com/identity/protocols/oauth2/limited-input-device#step-1:-request-device-and-user-codes
