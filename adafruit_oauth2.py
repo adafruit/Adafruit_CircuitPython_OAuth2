@@ -22,8 +22,10 @@ Implementation Notes
   https://github.com/adafruit/circuitpython/releases
 
 """
+
 try:
-    from typing import Optional, List
+    from typing import List, Optional
+
     import adafruit_requests
 except ImportError:
     pass
@@ -42,7 +44,7 @@ DEVICE_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token"
 DEVICE_GRANT_TYPE = "&grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code"
 
 
-class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attributes
+class OAuth2:
     """Implements OAuth2.0 authorization to access Google APIs via
     the OAuth 2.0 limited-input device application flow.
     https://developers.google.com/identity/protocols/oauth2/limited-input-device
@@ -101,9 +103,7 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
             "Content-Length": "0",
         }
         scope = " ".join(self._scopes)
-        url = DEVICE_AUTHORIZATION_ENDPOINT + "?client_id={0}&scope={1}".format(
-            self._client_id, scope
-        )
+        url = DEVICE_AUTHORIZATION_ENDPOINT + f"?client_id={self._client_id}&scope={scope}"
         response = self._requests.post(url, headers=headers)
         json_resp = response.json()
         response.close()
@@ -131,11 +131,9 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
             "Content-Length": "0",
         }
         url = (
-            "https://oauth2.googleapis.com/token?client_id={0}"
-            "&client_secret={1}&device_code={2}"
-            "&grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code".format(
-                self._client_id, self._client_secret, self._device_code
-            )
+            f"https://oauth2.googleapis.com/token?client_id={self._client_id}"
+            f"&client_secret={self._client_secret}&device_code={self._device_code}"
+            "&grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code"
         )
 
         # Blocking loop to poll endpoint
@@ -176,13 +174,11 @@ class OAuth2:  # pylint: disable=too-many-arguments, too-many-instance-attribute
             "Content-Length": "0",
         }
         url = (
-            "https://oauth2.googleapis.com/token?client_id={0}&client_secret={1}"
-            "&grant_type=refresh_token&refresh_token={2}".format(
-                self._client_id, self._client_secret, self.refresh_token
-            )
+            f"https://oauth2.googleapis.com/token?client_id={self._client_id}&client_secret={self._client_secret}"
+            f"&grant_type=refresh_token&refresh_token={self.refresh_token}"
         )
         resp = self._requests.post(url, headers=headers)
-        if resp.status_code in (400, 404):
+        if resp.status_code in {400, 404}:
             return False
         json_resp = resp.json()
         resp.close()
