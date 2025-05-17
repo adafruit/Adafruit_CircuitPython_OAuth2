@@ -132,8 +132,8 @@ class OAuth2:
         }
         url = (
             f"https://oauth2.googleapis.com/token?client_id={self._client_id}"
-            f"&client_secret={self._client_secret}&device_code={self._device_code}"
-            "&grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code"
+            + f"&client_secret={self._client_secret}&device_code={self._device_code}"
+            + "&grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code"
         )
 
         # Blocking loop to poll endpoint
@@ -175,7 +175,7 @@ class OAuth2:
         }
         url = (
             f"https://oauth2.googleapis.com/token?client_id={self._client_id}&client_secret={self._client_secret}"
-            f"&grant_type=refresh_token&refresh_token={self.refresh_token}"
+            + f"&grant_type=refresh_token&refresh_token={self.refresh_token}"
         )
         resp = self._requests.post(url, headers=headers)
         if resp.status_code in {400, 404}:
