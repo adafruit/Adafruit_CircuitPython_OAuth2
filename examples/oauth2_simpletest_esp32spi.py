@@ -3,13 +3,14 @@
 # SPDX-License-Identifier: Unlicense
 
 from os import getenv
+
+import adafruit_connection_manager
+import adafruit_requests
 import board
 import busio
-from digitalio import DigitalInOut
-import adafruit_connection_manager
 from adafruit_esp32spi import adafruit_esp32spi
+from digitalio import DigitalInOut
 
-import adafruit_requests
 from adafruit_oauth2 import OAuth2
 
 # Get WiFi details and Google keys, ensure these are setup in settings.toml
@@ -54,9 +55,7 @@ google_auth.request_codes()
 # long enough to handle the user_code and verification_url.
 # Details in link below:
 # https://developers.google.com/identity/protocols/oauth2/limited-input-device#displayingthecode
-print(
-    "1) Navigate to the following URL in a web browser:", google_auth.verification_url
-)
+print("1) Navigate to the following URL in a web browser:", google_auth.verification_url)
 print("2) Enter the following code:", google_auth.user_code)
 
 # Poll Google's authorization server
