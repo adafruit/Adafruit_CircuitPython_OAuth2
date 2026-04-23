@@ -43,7 +43,7 @@ print("Successfully authorized with Google!")
 print("-" * 40)
 print("\tAccess Token:", google_auth.access_token)
 print("\tAccess Token Scope:", google_auth.access_token_scope)
-print("\tAccess token expires in: %d seconds" % google_auth.access_token_expiration)
+print(f"\tAccess token expires in: {google_auth.access_token_expiration:d} seconds")
 print("\tRefresh Token:", google_auth.refresh_token)
 print("-" * 40)
 
